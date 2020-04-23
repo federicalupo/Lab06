@@ -7,13 +7,33 @@ public class Rilevamento {
 	private String localita;
 	private Date data;
 	private int umidita;
+	private double media;
+	private int giorno;
+	
+	
+	public Rilevamento(String localita, int giorno, int umidita) {
+		this.localita=localita;
+		this.giorno=giorno;
+		this.umidita=umidita;
+		
+		
+	}
 
+	
 	public Rilevamento(String localita, Date data, int umidita) {
 		this.localita = localita;
 		this.data = data;
 		this.umidita = umidita;
 	}
 
+	public  Rilevamento(String localita, Double media) {
+		this.localita=localita;
+		this.media=media;
+		
+		
+	}
+
+	
 	public String getLocalita() {
 		return localita;
 	}
@@ -43,10 +63,25 @@ public class Rilevamento {
 	// return localita + " " + data + " " + umidita;
 	// }
 
-	@Override
-	public String toString() {
-		return String.valueOf(umidita);
+	public double getMedia() {
+		return media;
 	}
+	
+	
+
+	//@Override
+	//public String toString() {
+	//	return String.valueOf(umidita);
+//	}
+
+	public int getGiorno() {
+		return giorno;
+	}
+
+
+	public String toString() {
+		 return localita + " " + media;
+		 }
 
 	
 

@@ -1,5 +1,6 @@
 package it.polito.tdp.meteo.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Citta {
@@ -8,11 +9,13 @@ public class Citta {
 	private String nome;
 	private List<Rilevamento> rilevamenti;
 	private int counter = 0;
+	private int ggConsecutivi=0;
 	
 	
 	
 	public Citta(String nome) {
 		this.nome = nome;
+		rilevamenti= new LinkedList<>();
 	}
 	
 	public Citta(String nome, List<Rilevamento> rilevamenti) {
@@ -77,6 +80,39 @@ public class Citta {
 	public String toString() {
 		return nome;
 	}
+
+	public int getGgConsecutivi() {
+		return ggConsecutivi;
+	}
+
 	
+	
+	public void setGgConsecutivi(int ggConsecutivi) {
+		this.ggConsecutivi = ggConsecutivi;
+	}
+
+	public void incrementaGgConsecutivi() {
+		this.ggConsecutivi ++;
+	}
+	public void decrementaGgConsecutivi() {
+		if(this.ggConsecutivi>0)
+			this.ggConsecutivi --;
+		else
+			this.ggConsecutivi=0;
+	}
+	
+	public void decrementaCounter() {
+		this.counter--;
+	}
+	
+	
+	
+	
+	
+/*
+	public void aggiungiRilevamento(Rilevamento r) {
+		this.rilevamenti.add(r);
+	}
+	*/
 
 }
