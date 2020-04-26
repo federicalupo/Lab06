@@ -95,24 +95,19 @@ public class Citta {
 		this.ggConsecutivi ++;
 	}
 	public void decrementaGgConsecutivi() {
-		if(this.ggConsecutivi>0)
+		if(this.ggConsecutivi>0)  //genova(-3) genova(-2) genova(-1) .. .. .. genova(0) genova(1) genova(2)
 			this.ggConsecutivi --;
 		else
-			this.ggConsecutivi=0;
+		{
+			this.ggConsecutivi--;
+			this.ggConsecutivi+= 3; 
+		}
 	}
 	
 	public void decrementaCounter() {
 		this.counter--;
 	}
-	
-	
-	
-	
-	
-/*
-	public void aggiungiRilevamento(Rilevamento r) {
-		this.rilevamenti.add(r);
-	}
-	*/
+
+
 
 }

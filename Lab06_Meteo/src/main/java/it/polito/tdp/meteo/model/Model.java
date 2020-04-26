@@ -60,53 +60,48 @@ public class Model {
 	}
 
 	private void cerca(List<Citta> citta, int livello, List<Citta> sequenza) {
-		
-		
-		
+
 		if (sequenza.size() == NUMERO_GIORNI_TOTALI) {
 			System.out.println(sequenza);
-			return; //!!!!!
+			return; // !!!!!
 
 		}
-		
+
 		for (Citta c : citta) {
-		
-			
-			if (livello== 0)
-			{
-				for(Citta temp: citta) {
-				temp.setCounter(0);
-			    temp.setGgConsecutivi(0);
+
+			if (livello == 0) {
+				for (Citta temp : citta) {
+					temp.setCounter(0);
+					temp.setGgConsecutivi(0);
 				}
 			}
-			
-			
 
-			if (c.getCounter() < NUMERO_GIORNI_CITTA_MAX) {   //e < numgg consecutiv
+			if (c.getCounter() < NUMERO_GIORNI_CITTA_MAX) { // e < numgg consecutiv
 
 				if (sequenza.size() != 0) // caso in cui sequenza è vuota
 				{
 					Citta prec = sequenza.get(sequenza.size() - 1);
 
-					if ((prec.equals(c) ) ) { //&& c.getGgConsecutivi()<NUMERO_GIORNI_CITTA_CONSECUTIVI_MIN
+					if ((prec.equals(c))) { // && c.getGgConsecutivi()<NUMERO_GIORNI_CITTA_CONSECUTIVI_MIN
 						c.increaseCounter();
 						c.incrementaGgConsecutivi();
 
 						sequenza.add(c);
 						cerca(citta, livello + 1, sequenza);
 						sequenza.remove(c);
-						//aggiorna contatori !!!!
+						// aggiorna contatori !!!!
 						c.decrementaCounter();
-						c.decrementaGgConsecutivi();  //perch diventa negativooo??????
-						//se sei uguale a quello prima ma hai ggconsecutivi>??
-						
+						c.decrementaGgConsecutivi();
 
-					} else { //rientra anche il caso in cui sono uguali ma c.getGGConsecutivi> MIN
-						if ( (! prec.equals(c))  && prec.getGgConsecutivi() >= NUMERO_GIORNI_CITTA_CONSECUTIVI_MIN && (livello<(NUMERO_GIORNI_TOTALI-2))) { // puoi cambiare, MA NON SI PUò CAMBIARE AL LIVELLO 13, se no riempi 13,14 e manca il terzo
+					} else { // rientra anche il caso in cui sono uguali ma c.getGGConsecutivi> MIN
+						if ((!prec.equals(c)) && prec.getGgConsecutivi() >= NUMERO_GIORNI_CITTA_CONSECUTIVI_MIN
+								&& (livello < (NUMERO_GIORNI_TOTALI - 2))) {
+
+							// puoi cambiare, MA NON SI PUò CAMBIARE AL LIVELLO 13, se no riempi 13,14 e
+							// manca il terzo
 
 							c.increaseCounter();
 							c.setGgConsecutivi(1);
-							
 
 							sequenza.add(c);
 							cerca(citta, livello + 1, sequenza);
@@ -127,7 +122,7 @@ public class Model {
 					sequenza.remove(c);
 					c.decrementaCounter();
 					c.decrementaGgConsecutivi();
-				
+
 				}
 
 			}
