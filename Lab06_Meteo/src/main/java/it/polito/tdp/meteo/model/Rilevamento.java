@@ -80,7 +80,7 @@ public class Rilevamento {
 
 
 	public String toString() {
-		 return localita + " " + media;
+		 return localita + "    " + media;
 		 }
 
 	

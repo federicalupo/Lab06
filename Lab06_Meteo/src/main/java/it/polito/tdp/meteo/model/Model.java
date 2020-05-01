@@ -17,6 +17,8 @@ public class Model {
 	private List<Citta> sequenzaMigliore;
 	private double costoMigliore;
 
+	private double costoTemp;
+
 	public Model() {
 
 		dao = new MeteoDAO();
@@ -60,10 +62,32 @@ public class Model {
 	}
 
 	private void cerca(List<Citta> citta, int livello, List<Citta> sequenza) {
+		
+		
 
 		if (sequenza.size() == NUMERO_GIORNI_TOTALI) {
-			System.out.println(sequenza);
-			return; // !!!!!
+		
+
+			if (this.sequenzaMigliore.size() == 0) { // se è vuota, imposta il valore migliore, così evito di impostare
+							// costoMigliore a = 1000000000
+
+				this.costoMigliore = costoTemp;
+				
+				this.sequenzaMigliore = new LinkedList<>(sequenza);
+				return;
+
+			} else {
+
+				if (this.costoTemp < this.costoMigliore) {
+					this.costoMigliore = costoTemp;
+
+					this.sequenzaMigliore = new LinkedList<>(sequenza);
+					return; // !!!!!
+				}
+
+			}
+
+			return;
 
 		}
 
@@ -73,6 +97,7 @@ public class Model {
 				for (Citta temp : citta) {
 					temp.setCounter(0);
 					temp.setGgConsecutivi(0);
+					this.costoTemp = 0; //all'inizio dei giorni deve essere a 0
 				}
 			}
 
@@ -86,12 +111,16 @@ public class Model {
 						c.increaseCounter();
 						c.incrementaGgConsecutivi();
 
+						this.costoTemp += c.getRilevamenti().get(livello).getUmidita();
+
 						sequenza.add(c);
 						cerca(citta, livello + 1, sequenza);
-						sequenza.remove(c);
+
 						// aggiorna contatori !!!!
 						c.decrementaCounter();
 						c.decrementaGgConsecutivi();
+						this.costoTemp -= c.getRilevamenti().get(livello).getUmidita();
+						sequenza.remove(c);
 
 					} else { // rientra anche il caso in cui sono uguali ma c.getGGConsecutivi> MIN
 						if ((!prec.equals(c)) && prec.getGgConsecutivi() >= NUMERO_GIORNI_CITTA_CONSECUTIVI_MIN
@@ -100,14 +129,18 @@ public class Model {
 							// puoi cambiare, MA NON SI PUò CAMBIARE AL LIVELLO 13, se no riempi 13,14 e
 							// manca il terzo
 
+							this.costoTemp += (COST + c.getRilevamenti().get(livello).getUmidita());
+
 							c.increaseCounter();
 							c.setGgConsecutivi(1);
 
 							sequenza.add(c);
 							cerca(citta, livello + 1, sequenza);
-							sequenza.remove(c);
+
 							c.decrementaCounter();
 							c.decrementaGgConsecutivi();
+							this.costoTemp -= (COST + c.getRilevamenti().get(livello).getUmidita());
+							sequenza.remove(c);
 
 						}
 					}
@@ -116,12 +149,16 @@ public class Model {
 
 					c.increaseCounter();
 					c.incrementaGgConsecutivi();
+					this.costoTemp += c.getRilevamenti().get(livello).getUmidita();
 
 					sequenza.add(c);
 					cerca(citta, livello + 1, sequenza);
-					sequenza.remove(c);
+
 					c.decrementaCounter();
 					c.decrementaGgConsecutivi();
+					this.costoTemp -= c.getRilevamenti().get(livello).getUmidita();
+
+					sequenza.remove(c);
 
 				}
 
@@ -131,4 +168,10 @@ public class Model {
 
 	}
 
+	public double getCostoMigliore() {
+		return costoMigliore;
+	}
+
+	
+	
 }

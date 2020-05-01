@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
+import it.polito.tdp.meteo.model.Citta;
 import it.polito.tdp.meteo.model.Model;
 import it.polito.tdp.meteo.model.Rilevamento;
 import javafx.event.ActionEvent;
@@ -43,6 +44,22 @@ public class FXMLController {
     @FXML
     void doCalcolaSequenza(ActionEvent event) {
 
+    	this.txtResult.clear();
+    	
+    	Integer mese= this.boxMese.getValue();
+    	
+    	List<Citta> sequenza = model.trovaSequenza(mese);
+    	
+    	
+    	this.txtResult.appendText(String.format("Costo complessivo: %s \n", model.getCostoMigliore()));
+    	this.txtResult.appendText("La sequenza migliore è: \n");
+    	for(Citta c: sequenza) {
+    		
+    		this.txtResult.appendText(c+"\n");
+    	}
+    	
+    	
+    	
     }
 
     @FXML

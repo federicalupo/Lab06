@@ -99,7 +99,7 @@ public class Citta {
 			this.ggConsecutivi --;
 		else
 		{
-			this.ggConsecutivi--;
+			this.ggConsecutivi--;  //quindi per evitare che vada in negativo, diminuisco e aggiungo 3
 			this.ggConsecutivi+= 3; 
 		}
 	}
@@ -107,6 +107,8 @@ public class Citta {
 	public void decrementaCounter() {
 		this.counter--;
 	}
+
+	
 
 
 
